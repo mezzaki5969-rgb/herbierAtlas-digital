@@ -1,13 +1,21 @@
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
+const API_BASE = '/api' // Le proxy Nginx redirige /api vers le backend
 
 export const saveDraft = async (payload) => {
-  console.log('📤 Sauvegarde Brouillon:', payload)
-  // Remplacer par fetch réel : return fetch(`${API_BASE}/production/draft`, ...)
-  return Promise.resolve()
+  const res = await fetch(`${API_BASE}/production/draft`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  if (!res.ok) throw new Error('Échec sauvegarde brouillon')
+  return res.json()
 }
 
 export const submitSheet = async (payload) => {
-  console.log('✅ Validation Fiche:', payload)
-  // Remplacer par fetch réel : return fetch(`${API_BASE}/production/submit`, ...)
-  return Promise.resolve()
+  const res = await fetch(`${API_BASE}/production/submit`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  if (!res.ok) throw new Error('Échec validation fiche')
+  return res.json()
 }
